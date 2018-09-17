@@ -31,7 +31,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="tabela1">
                     <thead>
                         <tr>
                             <th>Nome</th>
@@ -51,7 +51,7 @@
                 </table>
             </div>
             <div class="col">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="tabela2">
                     <thead>
                     <tr>
                         <th>Nome</th>
@@ -68,5 +68,55 @@
             </div>
         </div>
     </div>
+
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/masked-input-plugin.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/script.js"></script>
+
+    <script>
+
+        $( function() {
+            $("#id_nome").on("input",validaNomeFunction);
+            $("#id_nome").focus(function() { validaNomeFunction(); });
+        });
+
+        $("#nome").submit(function(e) {
+            e.preventDefault();
+            let nomeValido = validaNomeFunction();
+
+            if (nomeValido) {
+                addTabelaUm(nomeValido)
+            }
+
+        });
+
+        function validaNomeFunction() {
+            // console.log(e.charCode);
+            // return e.charCode >= 48 && e.charCode <= 57;
+            let nome = $("#id_nome");
+            console.log(nome.val());
+            if (nome.val() === '') {
+                nome.addClass('is-invalid');
+                //nome.removeClass('is-valid');
+                return false;
+            }
+            else {
+                nome.removeClass('is-invalid');
+                //nome.addClass('is-valid');
+                return nome.val();
+            }
+        }
+
+        function addTabelaUm(nome){
+            let linha = "<tr><td>" + nome + "</td><td><button type=\"button\" class=\"btn btn-primary\">Mover</button></td></tr>"
+            $('#tabela1 tr:last').after(linha);
+        }
+
+    </script>
+
+
 </body>
 </html>
