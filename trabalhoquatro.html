@@ -41,11 +41,11 @@
                     <tbody>
                         <tr>
                             <td>Roberto Arruda</td>
-                            <td><button type="button" class="btn btn-primary">Mover</button></td>
+                            <td><button type="button" class="btn btn-primary btn1">Mover</button></td>
                         </tr>
                         <tr>
                             <td>Carlos Nogueira</td>
-                            <td><button type="button" class="btn btn-primary">Mover</button></td>
+                            <td><button type="button" class="btn btn-primary btn1">Mover</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -61,7 +61,7 @@
                     <tbody>
                     <tr>
                         <td>Joana Arnaldo</td>
-                        <td><button type="button" class="btn btn-primary">Remover</button></td>
+                        <td><button type="button" class="btn btn-primary btn2">Remover</button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -81,6 +81,7 @@
         $( function() {
             $("#id_nome").on("input",validaNomeFunction);
             $("#id_nome").focus(function() { validaNomeFunction(); });
+            $("#tabela1 .btn1").click(function () { addTabelaDois(); });
         });
 
         $("#nome").submit(function(e) {
@@ -113,6 +114,12 @@
         function addTabelaUm(nome){
             let linha = "<tr><td>" + nome + "</td><td><button type=\"button\" class=\"btn btn-primary\">Mover</button></td></tr>"
             $('#tabela1 tr:last').after(linha);
+        }
+
+        function addTabelaDois(){
+            console.log("oi")
+            //let linha = "<tr><td>" + nome + "</td><td><button type=\"button\" class=\"btn btn-primary\">Mover</button></td></tr>"
+            //$('#tabela2 tr:last').after(linha);
         }
 
     </script>
