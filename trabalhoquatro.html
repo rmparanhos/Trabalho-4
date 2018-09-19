@@ -15,7 +15,7 @@
     <div class="container mt-5">
         <form id="nome" action="#" method="get" novalidate>
             <div class="form-group row">
-                <label for="id_nome" class="col-sm-2 col-form-label"><strong>Nome</strong></label>
+                <label id="label_id_nome" for="id_nome" class="col-sm-2 col-form-label"><strong>Nome</strong></label>
                 <div class="col-sm-10">
                     <input id="id_nome" type="text" class="form-control" name="nome" placeholder="Nome" required >
                 </div>
@@ -81,7 +81,14 @@
         $( function() {
             $("#id_nome").on("input",validaNomeFunction);
             $("#id_nome").focus(function() { validaNomeFunction(); });
-            $("#tabela1 .btn1").click(function () { addTabelaDois(); });
+
+            $("#tabela1").on("click",".btn1",function () {
+                var linha = $(this).closest("tr")
+                addTabelaDois(linha); });
+
+            $("#tabela2").on("click",".btn2",function () {
+                var linha = $(this).closest("tr")
+                removeTabelaDois(linha); });
         });
 
         $("#nome").submit(function(e) {
@@ -89,37 +96,51 @@
             let nomeValido = validaNomeFunction();
 
             if (nomeValido) {
+                $("#nome")[0].reset()
                 addTabelaUm(nomeValido)
             }
 
         });
 
         function validaNomeFunction() {
-            // console.log(e.charCode);
-            // return e.charCode >= 48 && e.charCode <= 57;
             let nome = $("#id_nome");
             console.log(nome.val());
             if (nome.val() === '') {
                 nome.addClass('is-invalid');
-                //nome.removeClass('is-valid');
+                $("#label_id_nome").addClass('text-danger');
                 return false;
             }
             else {
                 nome.removeClass('is-invalid');
+                $("#label_id_nome").removeClass('text-danger');
                 //nome.addClass('is-valid');
                 return nome.val();
             }
         }
 
         function addTabelaUm(nome){
-            let linha = "<tr><td>" + nome + "</td><td><button type=\"button\" class=\"btn btn-primary\">Mover</button></td></tr>"
-            $('#tabela1 tr:last').after(linha);
+            let linhaHTML = "<tr><td>" + nome + "</td><td><button type=\"button\" class=\"btn btn-primary btn1\">Mover</button></td></tr>"
+            $('#tabela1 tr:last').after(linhaHTML);
+            $('#tabela1 tr:last').hide().fadeIn();
         }
 
-        function addTabelaDois(){
-            console.log("oi")
-            //let linha = "<tr><td>" + nome + "</td><td><button type=\"button\" class=\"btn btn-primary\">Mover</button></td></tr>"
-            //$('#tabela2 tr:last').after(linha);
+        function addTabelaDois(linha){
+            var nome = linha.find('td:first').text();
+            console.log(nome);
+            linha.fadeOut(function(){
+                linha.remove();
+            })
+            let linhaHTML = "<tr><td>" + nome + "</td><td><button type=\"button\" class=\"btn btn-primary btn2\">Remover</button></td></tr>"
+            $('#tabela2 tr:last').after(linhaHTML);
+            $('#tabela2 tr:last').hide().fadeIn();
+        }
+
+        function removeTabelaDois(linha){
+            var nome = linha.find('td:first').text();
+            console.log(nome);
+            linha.fadeOut(function(){
+                linha.remove();
+            });
         }
 
     </script>
